@@ -1,0 +1,102 @@
+<html ng-app="app">
+
+<head>
+  <title>Gym Reservation</title>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css">
+
+<body>
+  <div><!--ng-controller="MenuCtrl"-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="index.html" >ReservationApp</a><!--ng-click="isWelcomeVisible()"-->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="activity.html">Activity List</a><!--ng-click="isActivityVisible()-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="trainer.html">Trainer List</a><!--ng-click="isActivityVisible()-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="lesson.html">Lesson List</a><!--ng-click="isActivityVisible()-->
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div id="activity" style="width:80%;" class="container" ng-init="getAllActivities()" ng-controller="ActivityCtrl">
+    <div class="container text-right" style="padding-top:20px;">
+        <button type="button" class="btn btn-info pull-right" ng-click = "clearNewActivity();" data-toggle="modal" data-target="#addActivityModal">Add New</button>
+    </div>
+    <div class="container" style="padding-top:20px;">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <td>Symbol</td>
+            <td>Name</td>
+            <td></td>
+          </tr>
+        <tbody>
+          <tr ng-repeat="act in activitiesList">
+            <td>
+              {{act.symbol}}
+            </td>
+            <td>
+              {{act.name}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" ng-click="deleteActivity(act)">Delete</button>
+              <button type="button" class="btn btn-secondary" ng-click="getClickedActivity(act)" data-toggle="modal" data-target="#addActivityModal">Update</button>
+            </td>
+          </tr>
+        </tbody>
+        </thead>
+      </table>
+    </div>
+    <div id="addActivityModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id = "addError" class="alert alert-danger alert-dismissible nonDisplay">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Error!</strong> {{addErrorMessage}}.
+            </div>
+          <form name="activityAddForm" ng-submit="addOrUpdateActivity(newActivity)">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Symbol</label>
+              <div class="col-sm-8">
+                <input class="form-control" type="text" name="symbol" ng-model="newActivity.symbol" ng-required="true" ng-minlength="2" />
+              </div>
+              <span class="col-sm-2" style="color:red;" ng-show="activityAddForm.symbol.$dirty && activityAddForm.symbol.$invalid">is required</span>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="name" ng-model="newActivity.name" ng-required="true" ng-minlength="2" />
+              </div>
+              <span class="col-sm-2" style="color:red;" ng-show="activityAddForm.name.$dirty && activityAddForm.name.$invalid">is required</span>
+            </div>
+            <input id="activityAddUpdateButton" type="submit" class="btn btn-primary" ng-disabled="activityAddForm.$invalid" value="Add" />
+          </form>
+        </div>
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load the AngularJS library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <!-- Load the JS Module -->
+  <script src="js/gymreservation.js"></script>
+  <!-- Bootstrap js-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!-- and of bootstrap js-->
+</body>
+
+</html>
