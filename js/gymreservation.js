@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['moment-picker']);
 
 /*-------------------ActivityCtrl--------------------*/
 app.controller('ActivityCtrl', function($scope, ActivityCRUDService) {
@@ -175,7 +175,7 @@ app.controller('TrainerCtrl', function($scope, TrainerCRUDService) {
 });*/
 /*-------------------LessonCtrl--------------------*/
 app.controller('LessonCtrl', function($scope, $filter, $rootScope, $location, LessonCRUDService, ActivityCRUDService, TrainerCRUDService, ReservationCRUDService) {
-
+  
   $scope.listOfLessons = null;
   $scope.listOfTrainers = null;
   $scope.listOfActivities = null;
@@ -263,7 +263,7 @@ app.controller('LessonCtrl', function($scope, $filter, $rootScope, $location, Le
   };
   $scope.addLesson = function(newLesson) {
     console.log(newLesson);
-    LessonCRUDService.addLesson(newLesson.name, $filter('date')(newLesson.date, "dd-MM-yyyy"), newLesson.maxAvailable, newLesson.maxAvailable, newLesson.trainer, newLesson.activity).
+    LessonCRUDService.addLesson(newLesson.name, newLesson.date, newLesson.maxAvailable, newLesson.maxAvailable, newLesson.trainer, newLesson.activity).
     then(
       function succes() {
         $('#addLessonModal.modal').modal('hide');
